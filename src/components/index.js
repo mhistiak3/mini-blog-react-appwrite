@@ -4,3 +4,6 @@ export { Container } from "./container/Container.jsx";
 export { Logo } from "./widget/Logo.jsx";
 export { NavButtons } from "./widget/NavButtons.jsx";
 export { Button } from "./widget/Button.jsx";
+export { Input } from "./widget/Input.jsx";
+export { Select } from "./widget/Select.jsx";
+export { PostCard } from "./partials/PostCard.jsx";

@@ -24,7 +24,9 @@ const App = () => {
   return (
     <div>
       <Header />
-      <main className="py-12"></main>
+      <main className="py-12">
+        
+      </main>
       <Footer />
     </div>
   );

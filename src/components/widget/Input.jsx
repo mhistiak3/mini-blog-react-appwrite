@@ -2,12 +2,12 @@ import { forwardRef, useId } from "react";
 
 export const Input = forwardRef(
   ({ label, type = "text", classNames = "", ...props }, ref) => {
-    const id = useId()
+    const id = useId();
     return (
       <div className="w-full">
         {label && (
           <label
-            className="inline-block mb-2 text-sm font-medium text-gray-700"
+            className="block font-medium text-gray-800 mb-1"
             htmlFor={id}
           >
             {label}
@@ -16,7 +16,7 @@ export const Input = forwardRef(
         <input
           type={type}
           ref={ref}
-          className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300 ease-in-out ${classNames}`}
+          className={`w-full px-4 py-3 bg-white border border-gray-300 rounded-md text-gray-900 placeholder-gray-400 shadow-md focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition duration-200 ease-in-out ${classNames}`}
           {...props}
           id={id}
         />
