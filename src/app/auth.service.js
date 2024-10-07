@@ -45,7 +45,7 @@ export class AuthService {
       return await this.account.get();
     } catch (error) {
       console.log("Error getting current user:", error);
-      throw error;
+   
     }
     return null;
   }
