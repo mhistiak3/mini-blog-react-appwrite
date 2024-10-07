@@ -1,3 +1,6 @@
+import {Logo} from "../";
+
+
 export const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300">
@@ -5,11 +8,8 @@ export const Footer = () => {
       <div className="max-w-[1100px] mx-auto py-10 px-4 grid grid-cols-1 md:grid-cols-4 gap-10 border-b border-gray-700">
         {/* Logo and Text */}
         <div>
-          <div className="flex items-center mb-4">
-            <img src="logo.png" alt="logo" className="w-10 me-2" />
-            <span className="text-2xl font-bold text-white">MinBlog</span>
-          </div>
-          <p className="text-gray-400">
+         <Logo/>
+          <p className="text-gray-400 mt-4">
             Your go-to platform for insightful articles and engaging content
             across a variety of topics.
           </p>

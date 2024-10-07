@@ -1,23 +1,34 @@
+import { useSelector } from "react-redux";
+import { Container, NavButtons, Logo } from "../";
+
 export const Header = () => {
+    const authState = useSelector((state) => state.auth);
   return (
     <div className="bg-gray-900 shadow-lg">
-      <nav className="flex justify-between py-4 text-white max-w-[1100px] mx-auto px-3">
-        {/* Logo Section */}
-        <div className="flex items-center space-x-3  px-4 py-2 rounded-lg cursor-pointer transition-colors duration-300">
-          <img src="logo.png" alt="logo" className="w-10" />
-          <span className="text-2xl font-bold tracking-wide">MinBlog</span>
-        </div>
+      <Container>
+        <nav className="flex flex-col justify-center gap-8 md:gap-0 md:flex-row md:justify-between py-4 text-white flex-wrap items-center">
+          {/* Logo Section */}
+          <Logo />
+          {authState.status && (
+            <div>
+              <a
+                href=""
+                className="font-semibold bg-gray-700 px-6 py-3 rounded me-2"
+              >
+                All Posts
+              </a>
+              <a
+                href=""
+                className="font-semibold bg-gray-700 px-6 py-3 rounded ms-2"
+              >
+                Add New Post
+              </a>
+            </div>
+          )}
 
-        {/* Button Section */}
-        <div className="flex space-x-4 justify-center items-center">
-          <button className="bg-white  px-5 py-2 text-black rounded-md font-semibold transition-colors duration-300">
-           Register
-          </button>
-          <button className="border border-1 px-5 py-2 text-white rounded-md font-semibold transition-colors duration-300">
-            LogIn
-          </button>
-        </div>
-      </nav>
+          <NavButtons />
+        </nav>
+      </Container>
     </div>
   );
 };

@@ -27,16 +27,16 @@ export class AuthService {
         throw new Error("Account creation failed");
       }
     } catch (error) {
-      console.error("Error creating account:", error);
-      throw error;
+      console.error("Error creating account:", error.message);
+     return false
     }
   }
   async login({ email, password }) {
     try {
       return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
-      console.error("Error logging in:", error);
-      throw error;
+      console.error("Error logging in:", error.message);
+      return false
     }
   }
 
@@ -44,7 +44,7 @@ export class AuthService {
     try {
       return await this.account.get();
     } catch (error) {
-      console.log("Error getting current user:", error);
+      console.log("Error getting current user:", error.message);
    
     }
     return null;
@@ -54,8 +54,8 @@ export class AuthService {
     try {
        await this.account.deleteSession("current");
     } catch (error) {
-      console.error("Error logging out:", error);
-      throw error;
+      console.error("Error logging out:", error.message);
+ 
     }
   }
 }
