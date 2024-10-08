@@ -19,7 +19,6 @@ const Register = () => {
   // Register handler
   const registerUser = async (data) => {
     setError("");
-    console.log(data);
     
     try {
       const newUser = await authService.createAccount(data);

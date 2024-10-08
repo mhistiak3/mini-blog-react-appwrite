@@ -7,3 +7,4 @@ export { Button } from "./widget/Button.jsx";
 export { Input } from "./widget/Input.jsx";
 export { Select } from "./widget/Select.jsx";
 export { PostCard } from "./partials/PostCard.jsx";
+export { Loader } from "./partials/Loader.jsx";

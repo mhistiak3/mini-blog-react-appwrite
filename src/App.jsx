@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import authService from "./app/auth.service";
 import { login, logout } from "./store/auth.slice";
-import { Footer, Header } from "./components";
+import { Footer, Header, Loader } from "./components";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -22,13 +22,13 @@ const App = () => {
 
   // Render loading page
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader/>
   }
   return (
     <div>
       <Header />
       <main >
-        <Register/>
+        <Home/>
       </main>
       <Footer />
     </div>
