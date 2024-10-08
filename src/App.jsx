@@ -6,7 +6,8 @@ import { Footer, Header, Loader } from "./components";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
-import { PostForm } from "./post/PostForm";
+import { PostForm } from "./components/post/PostForm";
+import AllPost from "./pages/AllPost";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ const App = () => {
     <div>
       <Header />
       <main>
-     
+     <AllPost/>
       </main>
       <Footer />
     </div>
