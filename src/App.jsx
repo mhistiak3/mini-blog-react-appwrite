@@ -6,6 +6,7 @@ import { Footer, Header, Loader } from "./components";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
+import { PostForm } from "./post/PostForm";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -22,13 +23,13 @@ const App = () => {
 
   // Render loading page
   if (loading) {
-    return <Loader/>
+    return <Loader />;
   }
   return (
     <div>
       <Header />
-      <main >
-   
+      <main>
+     
       </main>
       <Footer />
     </div>
