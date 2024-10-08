@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispath = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit,formState: { errors } } = useForm();
   const [error, setError] = useState("");
   const navigate = useNavigate();
   // Login handler
@@ -19,7 +19,7 @@ const Login = () => {
       if (session) {
         const user = await authService.getCurrentUser();
         if (user) dispath(loginAction({ user }));
-        navigate("/all-post")
+        navigate("/all-post");
       }
     } catch (error) {
       setError(error.message);
@@ -37,12 +37,42 @@ const Login = () => {
         </h2>
 
         {/* Login Form */}
-        <form className="space-y-6">
-          <Input type="email" label="Email" name="email" />
-          <Input type="password" label="Password" name="password" />
+        <form className="space-y-6" onSubmit={handleSubmit(login)}>
+          <Input
+            type="email"
+            label="Email: "
+            placeholder="Enter Your Email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Invalid email address",
+              },
+            })}
+          />
+          {errors.email && (
+            <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+          )}
+          <Input
+            type="password"
+            label="Password"
+            placeholder="Enter Your Password"
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            })}
+          />
+          {errors.password && (
+            <p className="text-red-600 text-sm mt-1">
+              {errors.password.message}
+            </p>
+          )}
+          {error && <p className="text-red-500">{error}</p>}
           <div>
             <Button type="submit" classNames="w-full py-3 text-lg">
-              {" "}
               Sign In
             </Button>
           </div>

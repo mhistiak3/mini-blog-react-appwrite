@@ -4,6 +4,7 @@ import authService from "./app/auth.service";
 import { login, logout } from "./store/auth.slice";
 import { Footer, Header } from "./components";
 import Login from "./pages/Login";
+import Home from "./pages/Home";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -26,7 +27,7 @@ const App = () => {
     <div>
       <Header />
       <main >
-        <Login/>
+        <Home/>
       </main>
       <Footer />
     </div>
