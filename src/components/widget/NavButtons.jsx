@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/auth.slice";
 import authService from "../../app/auth.service";
 import { Button } from "./Button";
-export const NavButtons = () => {
+import { memo } from "react";
+export const NavButtons = memo(() => {
   const dispath = useDispatch();
   const authState = useSelector((state) => state.auth);
   const handleLogout = async () => {
@@ -39,4 +40,4 @@ export const NavButtons = () => {
       )}
     </div>
   );
-};
+})

@@ -28,7 +28,7 @@ const App = () => {
     <div>
       <Header />
       <main >
-        <Home/>
+   
       </main>
       <Footer />
     </div>
