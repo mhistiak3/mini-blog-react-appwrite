@@ -1,5 +1,5 @@
-import { Container } from "postcss";
-import { PostForm } from "../components";
+
+import { Container, PostForm } from "../components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import service from "../app/config.service";
@@ -28,7 +28,7 @@ const EditPost = () => {
       navigate("/all-post");
     }
   }, [slug, navigate]);
-  
+
   if (!post) {
     navigate("/all-post");
   }

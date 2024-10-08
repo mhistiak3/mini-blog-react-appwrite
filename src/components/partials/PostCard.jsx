@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import service from "../../app/config.service";
 
-
-export const PostCard = ({ $id, title, featuredImage }) => {
+export const PostCard = ({ $id, title, featuredImage, author, createdAt }) => {
   return (
     <Link
       to={`/post/${$id}`}
@@ -20,6 +19,28 @@ export const PostCard = ({ $id, title, featuredImage }) => {
       {/* Post Content */}
       <div className="p-4">
         <h2 className="text-xl font-bold text-gray-900 mb-2">{title}</h2>
+
+        {/* Author and Created At */}
+        <div className="text-sm text-gray-600 mb-4">
+          <p>
+            By <span className="font-semibold">{author}</span> •{" "}
+            {new Date(createdAt).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </p>
+        </div>
+
+        {/* Read More Button */}
+        <div className="text-right">
+          <Link
+            to={`/post/${$id}`}
+            className="text-indigo-600 hover:text-indigo-800 font-semibold"
+          >
+            Read More &rarr;
+          </Link>
+        </div>
       </div>
     </Link>
   );

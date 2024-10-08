@@ -23,10 +23,13 @@ export const PostForm = ({ post }) => {
     },
   });
   const user = useSelector((state) => state.auth.user);
-const [error, setError] = useState('');
+console.log(post);
+
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const submitPost = async (data) => {
-  try {
+    let fileId = "";
+    try {
       if (post) {
         const file = data.image[0]
           ? await service.uploadFile(data.image[0])
@@ -43,11 +46,12 @@ const [error, setError] = useState('');
       } else {
         const file = await service.uploadFile(data.image[0]);
         if (file) {
-          const fileId = file.$id;
+          fileId = file.$id;
           data.featuredImage = fileId;
           const dbPost = await service.createPost({
             ...data,
             userId: user.$id,
+            author: user.name,
             status: data.status ? data.status : "active",
           });
 
@@ -56,12 +60,11 @@ const [error, setError] = useState('');
           }
         }
       }
-  } catch (error) {
-    console.log(error);
-    setError(error.message)
-  }
+    } catch (error) {
+      await service.deleteFile(fileId);
+      setError(error.message);
+    }
   };
-console.log(error);
 
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string") {
@@ -94,6 +97,7 @@ console.log(error);
         <div className="w-full md:w-2/3 px-2">
           <Input
             label="Title:"
+           
             placeholder="Title"
             classNames="mb-6"
             {...register("title", { required: true })}

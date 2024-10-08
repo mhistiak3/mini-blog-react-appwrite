@@ -18,6 +18,7 @@ const AllPost = () => {
       });
   }, []);
 
+console.log(posts);
 
   return (
     <div className="bg-gray-50 min-h-screen py-10">
@@ -29,7 +30,14 @@ const AllPost = () => {
         {posts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
-              <PostCard key={post.$id} $id={post.$id} title={post.title} featuredImage={post.featuredImage} />
+              <PostCard
+                key={post.$id}
+                $id={post.$id}
+                title={post.title}
+                featuredImage={post.featuredImage}
+                author={post.author}
+                createdAt={post.$createdAt}
+              />
             ))}
           </div>
         ) : (

@@ -20,7 +20,7 @@ export class Service {
     this.bucket = new Storage(this.client);
   }
 
-  async createPost({ title, content, slug, featuredImage, status, userId }) {
+  async createPost({ title, content, slug, featuredImage, status, userId,author }) {
     try {
       return await this.databases.createDocument(
         VITE_APPWRITE_DATABASE_ID,
@@ -32,6 +32,7 @@ export class Service {
           featuredImage,
           status,
           userId,
+          author,
         }
       );
     } catch (error) {

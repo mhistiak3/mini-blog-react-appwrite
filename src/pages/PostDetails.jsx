@@ -33,22 +33,28 @@ export default function Post() {
   };
 
   return post ? (
-    <div className="py-8">
+    <div className="py-8 bg-gray-50 min-h-screen">
       <Container>
         <div className="w-full flex flex-col items-center">
           {/* Post Image */}
-          <div className="relative w-full max-w-4xl rounded-lg overflow-hidden shadow-lg mb-8">
+          <div className="relative w-full max-w-3xl rounded-lg overflow-hidden shadow-lg mb-8">
             <img
               src={service.getFilePreview(post.featuredImage)}
               alt={post.title}
-              className="w-full h-64 object-cover rounded-lg"
+              className="w-full h-72 object-cover rounded-lg"
             />
             {isAuthor && (
               <div className="absolute top-4 right-4 flex space-x-3">
                 <Link to={`/edit-post/${post.$id}`}>
-                  <Button bgColor="bg-green-500">Edit</Button>
+                  <Button bgColor="bg-green-500" classNames="px-4 py-2">
+                    Edit
+                  </Button>
                 </Link>
-                <Button bgColor="bg-red-500" onClick={deletePost}>
+                <Button
+                  bgColor="bg-red-500"
+                  classNames="px-4 py-2"
+                  onClick={deletePost}
+                >
                   Delete
                 </Button>
               </div>
@@ -56,11 +62,26 @@ export default function Post() {
           </div>
 
           {/* Post Content */}
-          <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-md">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+          <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-md">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">
               {post.title}
             </h1>
-            <div className="prose prose-lg max-w-none text-gray-700">
+
+            {/* Author and Created Date */}
+            <div className="text-gray-600 mb-6 flex items-center space-x-4">
+              <span className="font-semibold">By {post.author}</span>
+              <span>•</span>
+              <span>
+                {new Date(post.$createdAt).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+
+            {/* Post Body */}
+            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
               {parse(post.content)}
             </div>
           </div>
