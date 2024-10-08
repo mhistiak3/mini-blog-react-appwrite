@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import authService from "../app/auth.service";
 import { login as loginAction } from "../store/auth.slice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispath = useDispatch();
@@ -85,9 +85,9 @@ const Login = () => {
         <div className="text-center">
           <p className="text-sm text-gray-600">
             Don’t have an account?{" "}
-            <a href="#" className="text-gray-950 hover:underline">
+            <Link to="/" className="text-gray-950 hover:underline">
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
       </div>

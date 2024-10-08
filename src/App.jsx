@@ -5,6 +5,7 @@ import { login, logout } from "./store/auth.slice";
 import { Footer, Header } from "./components";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Register from "./pages/Register";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -27,7 +28,7 @@ const App = () => {
     <div>
       <Header />
       <main >
-        <Home/>
+        <Register/>
       </main>
       <Footer />
     </div>
