@@ -2,45 +2,66 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import service from "../../app/config.service";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Input, RTE, Select } from "..";
 
 export const PostForm = ({ post }) => {
-  const { register, handleSubmit, watch, setValue, control, getValues } =
-    useForm({
-      defaultValues: {
-        title: post?.title || "",
-        slug: post?.slug || "",
-        content: post?.content || "",
-        status: post?.status || "",
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    control,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: post?.title || "",
+      slug: post?.slug || "",
+      content: post?.content || "",
+      status: post?.status || "",
+    },
+  });
   const user = useSelector((state) => state.auth.user);
+const [error, setError] = useState('');
   const navigate = useNavigate();
   const submitPost = async (data) => {
-    if (post) {
-      const file = data.image[0]
-        ? await service.uploadFile(data.image[0])
-        : null;
-      if (file) {
-        await service.deleteFile(post.featuredImage);
+  try {
+      if (post) {
+        const file = data.image[0]
+          ? await service.uploadFile(data.image[0])
+          : null;
+        if (file) {
+          await service.deleteFile(post.featuredImage);
+        }
+        const updatedPost = {
+          ...data,
+          featuredImage: file ? file.$id : post.featuredImage,
+        };
+        const dbPost = await service.updatePost(post.$id, updatedPost);
+        if (dbPost) navigate("/all-post");
+      } else {
+        const file = await service.uploadFile(data.image[0]);
+        if (file) {
+          const fileId = file.$id;
+          data.featuredImage = fileId;
+          const dbPost = await service.createPost({
+            ...data,
+            userId: user.$id,
+            status: data.status ? data.status : "active",
+          });
+
+          if (dbPost) {
+            navigate("/all-post");
+          }
+        }
       }
-      const updatedPost = {
-        ...data,
-        featuredImage: file ? file.$id : post.featuredImage,
-      };
-      const dbPost = await service.updatePost(post.$id, updatedPost);
-      if(dbPost) navigate("/all-post");
-    } else {
-      const file = await service.uploadFile(data.image[0]);
-      if (file) {
-        const fileId = file.$id;
-        data.featuredImage = fileId;
-        const dbPost = await service.createPost({ ...data, userId: user.$id });
-         if (dbPost) navigate("/all-post");
-      }
-    }
+  } catch (error) {
+    console.log(error);
+    setError(error.message)
+  }
   };
+console.log(error);
 
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string") {
@@ -117,7 +138,7 @@ export const PostForm = ({ post }) => {
             options={["active", "inactive"]}
             label="Status"
             classNames="mb-6"
-            {...register("status", { required: true })}
+            {...register("status")}
           />
           <Button
             type="submit"
@@ -129,6 +150,14 @@ export const PostForm = ({ post }) => {
           >
             {post ? "Update Post" : "Submit Post"}
           </Button>
+          {errors.title && (
+            <p className="text-red-500">{errors.title.message}</p>
+          )}
+          {errors.slug && <p className="text-red-500">{errors.slug.message}</p>}
+          {errors.image && !post && (
+            <p className="text-red-500">{errors.image.message}</p>
+          )}
+          {error && <p className="text-red-500">{error}</p>}
         </div>
       </form>
     </div>

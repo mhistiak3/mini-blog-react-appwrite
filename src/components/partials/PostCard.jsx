@@ -3,9 +3,11 @@ import service from "../../app/config.service";
 
 
 export const PostCard = ({ $id, title, featuredImage }) => {
-    
   return (
-    <Link to={`/post/${$id}`} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ease-in-out">
+    <Link
+      to={`/post/${$id}`}
+      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ease-in-out"
+    >
       {/* Featured Image */}
       <div className="h-48 overflow-hidden">
         <img

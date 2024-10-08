@@ -1,5 +1,5 @@
-import { Container } from "postcss"
-import { PostForm } from "../components"
+
+import { PostForm, Container } from "../components";
 
 const AddPost = () => {
   return (

@@ -8,7 +8,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispath = useDispatch();
-  const { register, handleSubmit,formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [error, setError] = useState("");
   const navigate = useNavigate();
   // Login handler
@@ -16,10 +20,18 @@ const Login = () => {
     setError("");
     try {
       const session = await authService.login(data);
+      
+
       if (session) {
         const user = await authService.getCurrentUser();
-        if (user) dispath(loginAction({ user }));
-        navigate("/all-post");
+
+        if (user) {
+          dispath(loginAction({ user }));
+          navigate("/all-post");
+        }
+      }
+      else{
+        setError("Invalid email or password");
       }
     } catch (error) {
       setError(error.message);
@@ -60,8 +72,8 @@ const Login = () => {
             {...register("password", {
               required: "Password is required",
               minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters",
+                value: 8,
+                message: "Password must be at least 8 characters",
               },
             })}
           />
