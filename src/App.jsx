@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import authService from "./app/auth.service";
 import { login, logout } from "./store/auth.slice";
 import { Footer, Header } from "./components";
+import Login from "./pages/Login";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -24,8 +25,8 @@ const App = () => {
   return (
     <div>
       <Header />
-      <main className="py-12">
-        
+      <main >
+        <Login/>
       </main>
       <Footer />
     </div>
