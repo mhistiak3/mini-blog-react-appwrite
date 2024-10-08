@@ -3,6 +3,7 @@ import { logout } from "../../store/auth.slice";
 import authService from "../../app/auth.service";
 import { Button } from "./Button";
 import { memo } from "react";
+import { Link } from "react-router-dom";
 export const NavButtons = memo(() => {
   const dispath = useDispatch();
   const authState = useSelector((state) => state.auth);
@@ -22,20 +23,24 @@ export const NavButtons = memo(() => {
         </Button>
       ) : (
         <>
-          <Button
-            bgColor="bg-white"
-            textColor="text-black"
-            classNames="border border-white hover:bg-transparent hover:text-white  transition-colors duration-300"
-          >
-            Register
-          </Button>
-          <Button
-            bgColor=""
-            textColor="text-white"
-            classNames="border border-1 hover:bg-white hover:text-black transition-colors duration-300"
-          >
-            LogIn
-          </Button>
+          <Link to="/register">
+            <Button
+              bgColor="bg-white"
+              textColor="text-black"
+              classNames="border border-white hover:bg-transparent hover:text-white  transition-colors duration-300"
+            >
+              Register
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button
+              bgColor=""
+              textColor="text-white"
+              classNames="border border-1 hover:bg-white hover:text-black transition-colors duration-300"
+            >
+              Login
+            </Button>
+          </Link>
         </>
       )}
     </div>

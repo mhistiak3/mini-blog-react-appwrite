@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Container, NavButtons, Logo } from "../";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
     const authState = useSelector((state) => state.auth);
@@ -11,18 +12,18 @@ export const Header = () => {
           <Logo />
           {authState.status && (
             <div>
-              <a
-                href=""
+              <Link
+                to="/all-post"
                 className="font-semibold bg-gray-700 px-6 py-3 rounded me-2"
               >
                 All Posts
-              </a>
-              <a
-                href=""
+              </Link>
+              <Link
+                to="/add-post"
                 className="font-semibold bg-gray-700 px-6 py-3 rounded ms-2"
               >
                 Add New Post
-              </a>
+              </Link>
             </div>
           )}
 
