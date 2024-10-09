@@ -63,7 +63,7 @@ Make sure you have the following installed:
    npm start
    ```
 
-5. Open your browser and go to `http://localhost:3000` to see the application in action.
+5. Open your browser and go to `http://localhost:5173` to see the application in action.
 
 ### Deployment
 
