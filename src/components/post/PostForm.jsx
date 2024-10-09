@@ -12,7 +12,7 @@ export const PostForm = ({ post }) => {
     watch,
     setValue,
     control,
-    getValues,
+    getValues,reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -23,7 +23,7 @@ export const PostForm = ({ post }) => {
     },
   });
   const user = useSelector((state) => state.auth.user);
-console.log(post);
+
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -39,6 +39,7 @@ console.log(post);
         }
         const updatedPost = {
           ...data,
+          slug:undefined,
           featuredImage: file ? file.$id : post.featuredImage,
         };
         const dbPost = await service.updatePost(post.$id, updatedPost);
@@ -61,7 +62,7 @@ console.log(post);
         }
       }
     } catch (error) {
-      await service.deleteFile(fileId);
+      await service.deleteFile(data.featuredImage);
       setError(error.message);
     }
   };
@@ -77,6 +78,17 @@ console.log(post);
     }
     return "";
   }, []);
+
+  useEffect(() => {
+    if (post) {
+      reset({
+        title: post.title || "",
+        slug: post.slug || "",
+        content: post.content || "",
+        status: post.status || "active",
+      });
+    }
+  }, [post, reset]);
 
   useEffect(() => {
     const subscribtion = watch((value, { name }) => {

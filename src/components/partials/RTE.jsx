@@ -16,20 +16,38 @@ export const RTE = ({ name, control, label, defaultValue = "" }) => {
         render={({ field: { onChange } }) => (
           <Editor
             apiKey={VITE_TINY_MCE_API_KEY}
-            onEditorChange={onChange}
+            onEditorChange={(content) => onChange(content)}
             initialValue={defaultValue}
             init={{
               height: 500,
               menubar: false,
               plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table paste code help wordcount",
+                "advlist",
+                "autolink",
+                "lists",
+                "link",
+                "image",
+                "charmap",
+
+                "preview",
+                "anchor",
+                "searchreplace",
+                "visualblocks",
+                "code",
+                "fullscreen",
+                "insertdatetime",
+                "media",
+                "table",
+
+                "code",
+                "help",
+                "wordcount",
               ],
               toolbar:
-                "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+                "undo redo | bold italic | bullist numlist | link image | code",
+
               content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
             }}
           />
         )}
