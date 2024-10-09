@@ -34,12 +34,9 @@ export const PostCard = ({ $id, title, featuredImage, author, createdAt }) => {
 
         {/* Read More Button */}
         <div className="text-right">
-          <Link
-            to={`/post/${$id}`}
-            className="text-indigo-600 hover:text-indigo-800 font-semibold"
-          >
+          <button className="text-indigo-600 hover:text-indigo-800 font-semibold">
             Read More &rarr;
-          </Link>
+          </button>
         </div>
       </div>
     </Link>

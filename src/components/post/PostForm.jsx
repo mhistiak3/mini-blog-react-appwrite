@@ -6,13 +6,16 @@ import { useCallback, useEffect, useState } from "react";
 import { Button, Input, RTE, Select } from "..";
 
 export const PostForm = ({ post }) => {
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     control,
-    getValues,reset,
+    getValues,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -24,12 +27,12 @@ export const PostForm = ({ post }) => {
   });
   const user = useSelector((state) => state.auth.user);
 
-
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const submitPost = async (data) => {
     let fileId = "";
     try {
+      setLoading(true);
       if (post) {
         const file = data.image[0]
           ? await service.uploadFile(data.image[0])
@@ -39,7 +42,8 @@ export const PostForm = ({ post }) => {
         }
         const updatedPost = {
           ...data,
-          slug:undefined,
+          slug: undefined,
+          image: undefined,
           featuredImage: file ? file.$id : post.featuredImage,
         };
         const dbPost = await service.updatePost(post.$id, updatedPost);
@@ -61,7 +65,9 @@ export const PostForm = ({ post }) => {
           }
         }
       }
+      setLoading(false);
     } catch (error) {
+       setLoading(false);
       await service.deleteFile(data.featuredImage);
       setError(error.message);
     }
@@ -83,7 +89,7 @@ export const PostForm = ({ post }) => {
     if (post) {
       reset({
         title: post.title || "",
-        slug: post.slug || "",
+        slug: slugTransform(post.title, { shouldValidate: true }) || "",
         content: post.content || "",
         status: post.status || "active",
       });
@@ -109,7 +115,6 @@ export const PostForm = ({ post }) => {
         <div className="w-full md:w-2/3 px-2">
           <Input
             label="Title:"
-           
             placeholder="Title"
             classNames="mb-6"
             {...register("title", { required: true })}
@@ -134,21 +139,36 @@ export const PostForm = ({ post }) => {
           />
         </div>
         <div className="w-full md:w-1/3 px-2">
-          <Input
-            label="Featured Image :"
-            type="file"
-            classNames="mb-6"
-            accept="image/png, image/jpg, image/jpeg, image/gif"
-            {...register("image", { required: !post })}
-          />
-          {post && (
-            <div className="w-full mb-6">
-              <img
-                src={service.getFilePreview(post.featuredImage)}
-                alt={post.title}
-                className="rounded-lg w-full object-cover h-48"
+          {post ? (
+            <>
+              <Input
+                label="Featured Image :"
+                type="file"
+                classNames="mb-6"
+                accept="image/png, image/jpg, image/jpeg, image/gif"
+                {...register("image")}
               />
-            </div>
+              <div className="w-full mb-6">
+                <img
+                  src={service.getFilePreview(post.featuredImage)}
+                  alt={post.title}
+                  className="rounded-lg w-full object-cover h-48"
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              {" "}
+              <Input
+                label="Featured Image :"
+                type="file"
+                classNames="mb-6"
+                accept="image/png, image/jpg, image/jpeg, image/gif"
+                {...register("image", {
+                  required: true,
+                })}
+              />
+            </>
           )}
           <Select
             options={["active", "inactive"]}
@@ -156,16 +176,21 @@ export const PostForm = ({ post }) => {
             classNames="mb-6"
             {...register("status")}
           />
-          <Button
-            type="submit"
-            classNames={`w-full py-3 rounded-lg text-lg font-semibold text-white ${
-              post
-                ? "bg-green-500 hover:bg-green-600"
-                : "bg-blue-500 hover:bg-blue-600"
-            } transition duration-300`}
-          >
-            {post ? "Update Post" : "Submit Post"}
-          </Button>
+          {loading ? (
+            <h4> Loading...</h4>
+          ) : (
+            <Button
+              type="submit"
+              classNames={`w-full py-3 rounded-lg text-lg font-semibold text-white ${
+                post
+                  ? "bg-green-500 hover:bg-green-600"
+                  : "bg-blue-500 hover:bg-blue-600"
+              } transition duration-300`}
+            >
+              {post ? "Update Post" : "Submit Post"}
+            </Button>
+          )}
+
           {errors.title && (
             <p className="text-red-500">{errors.title.message}</p>
           )}

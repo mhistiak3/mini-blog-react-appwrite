@@ -43,6 +43,8 @@ export class Service {
 
   async updatePost(slug, updatedPost) {
     try {
+      console.log(updatedPost);
+      
       return await this.databases.updateDocument(
         VITE_APPWRITE_DATABASE_ID,
         VITE_APPWRITE_COLLECTION_ID,

@@ -16,7 +16,7 @@ export const Input = forwardRef(
           className={`w-full px-4 py-3 bg-white border border-gray-300 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition duration-200 ease-in-out ${classNames}`}
           {...props}
           id={id}
-          required
+    
         />
       </div>
     );

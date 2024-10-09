@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button, Container } from "../components";
+import { Button, Container, Loader } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import service from "../app/config.service";
 
 export default function Post() {
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { slug } = useParams();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.user);
@@ -15,7 +16,10 @@ export default function Post() {
   useEffect(() => {
     if (slug) {
       service.getPost(slug).then((post) => {
-        if (post) setPost(post);
+        if (post){
+          setPost(post);
+          setLoading(false)
+        } 
         else navigate("/");
       });
     } else navigate("/");
@@ -32,6 +36,8 @@ export default function Post() {
     });
   };
 
+  if(loading){
+    return <Loader />}
   return post ? (
     <div className="py-8 bg-gray-50 min-h-screen">
       <Container>

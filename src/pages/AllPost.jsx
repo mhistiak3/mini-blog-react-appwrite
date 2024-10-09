@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
 import { Container, PostCard } from "../components";
 import service from "../app/config.service";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "../store/posts.slice";
 
 const AllPost = () => {
-  const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch()
+  // const [posts, setPosts] = useState([]);
+  const posts = useSelector(state => state.posts.posts)
 
   useEffect(() => {
     service
       .getPosts()
       .then((posts) => {
         if (posts) {
-          setPosts(posts.documents);
+          // setPosts(posts.documents);
+          dispatch(getPosts({ posts: posts.documents }));
         }
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
 
 console.log(posts);
 
