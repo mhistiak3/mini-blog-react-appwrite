@@ -5,7 +5,7 @@
 
 ## Overview
 
-The Mini Blog App is a lightweight blogging platform built using **React** for the frontend and **Appwrite** for the backend. This application allows users to create, edit, and manage blog posts easily. It is designed to be simple and user-friendly while showcasing the power of modern web development technologies.
+The Mini Blog App is a lightweight blogging platform built using **React** for the frontend and **Appwrite** for the backend. This application allows users to create, edit, and manage blog posts easily.
 
 ## Features
 
